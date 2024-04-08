@@ -10,7 +10,4 @@ enum class ViewsScreens {
     AddProductoView,
     AddCategoriaView,
 
-    UpdateUsersView,
-    UpdateCategoriaView,
-    UpdateProductoView
 }

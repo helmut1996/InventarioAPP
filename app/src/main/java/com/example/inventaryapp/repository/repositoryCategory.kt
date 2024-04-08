@@ -14,4 +14,5 @@ class repositoryCategory @Inject constructor(private val categoryDao: CategoriaD
     suspend fun updateCategory(category:categoria) = categoryDao.update(category)
     suspend fun deleteCategory(category:categoria) = categoryDao.delete(category)
     fun getAllCronos(): Flow<List<categoria>> = categoryDao.getCategorias().flowOn(Dispatchers.IO).conflate()
+    fun getCategoryById(id:Long):Flow<categoria> = categoryDao.getCategoriasById(id).flowOn(Dispatchers.IO).conflate()
 }

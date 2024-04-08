@@ -11,12 +11,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.inventaryapp.ui.categoria.AddCategoryView
 import com.example.inventaryapp.ui.categoria.CategoryView
+import com.example.inventaryapp.ui.categoria.EditCategoryView
 import com.example.inventaryapp.ui.home.HomeView
 import com.example.inventaryapp.ui.productos.ProductView
 import com.example.inventaryapp.ui.users.AddUsersView
@@ -81,6 +84,12 @@ fun NavManager(categoryVM:viewModelCategory) {
             }
             composable(route = ViewsScreens.AddCategoriaView.name) {
                 AddCategoryView(navController,categoryVM)
+            }
+            composable(route = "EditCategoryView/{id}", arguments = listOf(
+                navArgument("id"){type= NavType.LongType}
+            )) {
+                val id = it.arguments?.getLong("id") ?:0
+                EditCategoryView(navController,categoryVM, id)
             }
 
             }
