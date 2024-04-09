@@ -1,4 +1,4 @@
-package com.example.inventaryapp
+package com.example.inventaryapp.state
 
 data class StateCategory(
     val id:Long =0,

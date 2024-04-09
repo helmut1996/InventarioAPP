@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.inventaryapp.StateCategory
+import com.example.inventaryapp.state.StateCategory
 import com.example.inventaryapp.model.categoria
 import com.example.inventaryapp.repository.repositoryCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
