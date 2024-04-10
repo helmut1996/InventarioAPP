@@ -21,15 +21,17 @@ import com.example.inventaryapp.ui.categoria.AddCategoryView
 import com.example.inventaryapp.ui.categoria.CategoryView
 import com.example.inventaryapp.ui.categoria.EditCategoryView
 import com.example.inventaryapp.ui.home.HomeView
+import com.example.inventaryapp.ui.productos.AddProductoView
 import com.example.inventaryapp.ui.productos.ProductView
 import com.example.inventaryapp.ui.users.AddUsersView
 import com.example.inventaryapp.ui.users.EditUsersView
 import com.example.inventaryapp.ui.users.UsersView
 import com.example.inventaryapp.viewmodel.viewModelCategory
+import com.example.inventaryapp.viewmodel.viewModelProduct
 import com.example.inventaryapp.viewmodel.viewmodelUsers
 
 @Composable
-fun NavManager(categoryVM:viewModelCategory, usersVM:viewmodelUsers) {
+fun NavManager(categoryVM:viewModelCategory, usersVM:viewmodelUsers, productVM:viewModelProduct) {
     val navController = rememberNavController()
 
     Scaffold(
@@ -78,7 +80,11 @@ fun NavManager(categoryVM:viewModelCategory, usersVM:viewmodelUsers) {
                 CategoryView(navController,categoryVM)
             }
             composable(route = ViewsScreens.ProductoView.name) {
-                ProductView()
+                ProductView(navController, productVM)
+            }
+
+            composable(route = ViewsScreens.AddProductoView.name) {
+                AddProductoView(navController, productVM)
             }
 
             composable(route = ViewsScreens.AddUsersView.name) {

@@ -13,10 +13,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import com.example.inventaryapp.navigation.ViewsScreens
+import com.example.inventaryapp.viewmodel.viewModelProduct
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductView() {
+fun ProductView(navController: NavHostController, productVM: viewModelProduct) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -24,7 +27,7 @@ fun ProductView() {
 
                 actions = {
                     IconButton(onClick = {
-
+                        navController.navigate(ViewsScreens.AddProductoView.name)
                     }) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "")
                     }

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import com.example.inventaryapp.navigation.NavManager
 import com.example.inventaryapp.ui.theme.InventaryAppTheme
 import com.example.inventaryapp.viewmodel.viewModelCategory
+import com.example.inventaryapp.viewmodel.viewModelProduct
 import com.example.inventaryapp.viewmodel.viewmodelUsers
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val categoryVM:viewModelCategory by viewModels()
         val userVM: viewmodelUsers by viewModels()
+        val productVM: viewModelProduct by viewModels()
         setContent {
             InventaryAppTheme {
                 // A surface container using the 'background' color from the theme
@@ -27,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavManager(categoryVM,userVM)
+                    NavManager(categoryVM,userVM,productVM)
                 }
             }
         }

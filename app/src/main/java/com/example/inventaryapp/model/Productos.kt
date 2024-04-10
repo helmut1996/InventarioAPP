@@ -11,6 +11,8 @@ data class Productos(
     val id:Long = 0,
    @ColumnInfo("producto_nombre")
     val nombre:String="",
+    @ColumnInfo("producto_categoria")
+    val categoria:String="",
     @ColumnInfo("producto_precios")
     val precios:Double=0.0,
     @ColumnInfo("producto_stock")
