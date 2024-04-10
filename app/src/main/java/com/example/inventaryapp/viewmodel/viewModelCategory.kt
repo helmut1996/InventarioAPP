@@ -1,6 +1,5 @@
 package com.example.inventaryapp.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -22,11 +21,12 @@ class viewModelCategory @Inject constructor(private val repository:repositoryCat
 
     var state by mutableStateOf(StateCategory())
         private set
+    var showAlert by mutableStateOf(false)
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getAllCronos().collect{item->
-                if (item.isNullOrEmpty()){
+                if (item.isEmpty()){
                     _categoryList.value = emptyList()
                 }else{
                     _categoryList.value = item
@@ -38,15 +38,10 @@ class viewModelCategory @Inject constructor(private val repository:repositoryCat
     fun getCategoryById(id:Long){
         viewModelScope.launch(Dispatchers.IO) {
             repository.getCategoryById(id).collect {item ->
-                if (item != null){
-                    state = state.copy(
-                        nombre = item.nombre,
-                        descripcion = item.descripcion
-                    )
-                }else{
-
-                    Log.e("Error", "Elobjeto categoria es nulo")
-                }
+                state = state.copy(
+                    nombre = item.nombre,
+                    descripcion = item.descripcion
+                )
         }
         }
     }
@@ -55,4 +50,5 @@ class viewModelCategory @Inject constructor(private val repository:repositoryCat
     fun updateCategory(category:categoria) = viewModelScope.launch { repository.updateCategory(category) }
     fun deleteCategory(category:categoria) = viewModelScope.launch { repository.deleteCategory(category) }
 
+    fun closeAlert() { showAlert = false}
 }

@@ -22,9 +22,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.inventaryapp.components.Alert
 import com.example.inventaryapp.model.categoria
 import com.example.inventaryapp.viewmodel.viewModelCategory
 
@@ -33,7 +33,7 @@ import com.example.inventaryapp.viewmodel.viewModelCategory
 fun AddCategoryView(navController: NavController, categoryVM: viewModelCategory){
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    val context = LocalContext.current
+
 
     Scaffold(
         topBar = {
@@ -48,13 +48,18 @@ fun AddCategoryView(navController: NavController, categoryVM: viewModelCategory)
                 },
                 actions = {
                     IconButton(onClick = {
-                        categoryVM.addCategory(
-                            categoria(
-                                nombre = title,
-                                descripcion = description
+                        if (title.isEmpty() || description.isEmpty()){
+                            categoryVM.showAlert = true
+                        }else{
+                            categoryVM.addCategory(
+                                categoria(
+                                    nombre = title,
+                                    descripcion = description
+                                )
                             )
-                        )
-                        navController.popBackStack()
+                            navController.popBackStack()
+                        }
+
                     }) {
                         Icon(imageVector = Icons.Default.AddCircle, contentDescription = "")
                     }
@@ -86,6 +91,16 @@ fun AddCategoryView(navController: NavController, categoryVM: viewModelCategory)
                     .fillMaxHeight()
                     .padding(start = 20.dp, end = 20.dp, bottom = 10.dp)
             )
+        }
+
+        if (categoryVM.showAlert){
+            Alert(
+                title = "Alerta",
+                message = "Nombre y/o Descripcion vacios",
+                confirmText = "Aceptar",
+                onConfirmClick = { categoryVM.closeAlert() }) {
+
+            }
         }
 
     }

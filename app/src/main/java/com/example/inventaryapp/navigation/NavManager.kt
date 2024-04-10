@@ -23,11 +23,13 @@ import com.example.inventaryapp.ui.categoria.EditCategoryView
 import com.example.inventaryapp.ui.home.HomeView
 import com.example.inventaryapp.ui.productos.ProductView
 import com.example.inventaryapp.ui.users.AddUsersView
+import com.example.inventaryapp.ui.users.EditUsersView
 import com.example.inventaryapp.ui.users.UsersView
 import com.example.inventaryapp.viewmodel.viewModelCategory
+import com.example.inventaryapp.viewmodel.viewmodelUsers
 
 @Composable
-fun NavManager(categoryVM:viewModelCategory) {
+fun NavManager(categoryVM:viewModelCategory, usersVM:viewmodelUsers) {
     val navController = rememberNavController()
 
     Scaffold(
@@ -70,7 +72,7 @@ fun NavManager(categoryVM:viewModelCategory) {
                 HomeView()
             }
             composable(route = ViewsScreens.UsersView.name) {
-                UsersView(navController)
+                UsersView(navController, usersVM)
             }
             composable(route = ViewsScreens.CategoryView.name) {
                 CategoryView(navController,categoryVM)
@@ -80,7 +82,7 @@ fun NavManager(categoryVM:viewModelCategory) {
             }
 
             composable(route = ViewsScreens.AddUsersView.name) {
-                AddUsersView(navController)
+                AddUsersView(navController, usersVM)
             }
             composable(route = ViewsScreens.AddCategoriaView.name) {
                 AddCategoryView(navController,categoryVM)
@@ -90,6 +92,13 @@ fun NavManager(categoryVM:viewModelCategory) {
             )) {
                 val id = it.arguments?.getLong("id") ?:0
                 EditCategoryView(navController,categoryVM, id)
+            }
+
+            composable(route = "EditUsersView/{id}", arguments = listOf(
+                navArgument("id"){type= NavType.LongType}
+            )) {
+                val id = it.arguments?.getLong("id") ?:0
+                EditUsersView(navController,usersVM, id)
             }
 
             }

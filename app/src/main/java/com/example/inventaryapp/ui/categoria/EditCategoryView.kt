@@ -23,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.inventaryapp.model.categoria
@@ -35,7 +34,7 @@ import com.example.inventaryapp.viewmodel.viewModelCategory
 fun EditCategoryView(navController: NavController, categoryVM: viewModelCategory,id:Long){
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    val context = LocalContext.current
+
     val state = categoryVM.state
 
     title = state.nombre
