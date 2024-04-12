@@ -27,11 +27,17 @@ import com.example.inventaryapp.ui.users.AddUsersView
 import com.example.inventaryapp.ui.users.EditUsersView
 import com.example.inventaryapp.ui.users.UsersView
 import com.example.inventaryapp.viewmodel.viewModelCategory
+import com.example.inventaryapp.viewmodel.viewModelHome
 import com.example.inventaryapp.viewmodel.viewModelProduct
 import com.example.inventaryapp.viewmodel.viewmodelUsers
 
 @Composable
-fun NavManager(categoryVM:viewModelCategory, usersVM:viewmodelUsers, productVM:viewModelProduct) {
+fun NavManager(
+    categoryVM: viewModelCategory,
+    usersVM: viewmodelUsers,
+    productVM: viewModelProduct,
+    homeVM: viewModelHome
+) {
     val navController = rememberNavController()
 
     Scaffold(
@@ -71,7 +77,7 @@ fun NavManager(categoryVM:viewModelCategory, usersVM:viewmodelUsers, productVM:v
                 .padding(paddingValues)
         ) {
             composable(route = ViewsScreens.HomeView.name) {
-                HomeView()
+                HomeView(homeVM)
             }
             composable(route = ViewsScreens.UsersView.name) {
                 UsersView(navController, usersVM)
