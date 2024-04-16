@@ -90,7 +90,7 @@ fun NavManager(
             }
 
             composable(route = ViewsScreens.AddProductoView.name) {
-                AddProductoView(navController, productVM)
+                AddProductoView(navController, productVM,categoryVM)
             }
 
             composable(route = ViewsScreens.AddUsersView.name) {
