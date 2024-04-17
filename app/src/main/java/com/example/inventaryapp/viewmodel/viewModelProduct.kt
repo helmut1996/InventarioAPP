@@ -57,10 +57,10 @@ class viewModelProduct @Inject constructor(private val repository: repositoryPro
     }
 
     fun addProduct(product: Productos) = viewModelScope.launch { repository.addProducts(product) }
-    fun updateUsers(product: Productos) =
+    fun updateProducto(product: Productos) =
         viewModelScope.launch { repository.updateProducts(product) }
 
-    fun deleteUsers(product: Productos) =
+    fun deleteProducto(product: Productos) =
         viewModelScope.launch { repository.deleteProduct(product) }
 
     fun closeAlert() {
