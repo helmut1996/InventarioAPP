@@ -46,15 +46,15 @@ fun ProductView(navController: NavHostController, productVM: viewModelProduct) {
         ) {
             val productList by productVM.productlist.collectAsState()
             LazyColumn {
-                this.items(productList){ item ->
+                this.items(productList) { item ->
                     CardProduct(
                         nombre = item.nombre,
                         categoria = item.categoria,
                         cantidad = item.stock.toString(),
                         precio = item.precios.toString(),
                         foto = item.foto,
-                        onEdit = { /*TODO*/ }) {
-                            productVM.deleteProducto(item)
+                        onDetails = {navController.navigate("DetailsProducto/${item.id}") }) {
+                        productVM.deleteProducto(item)
                     }
                 }
             }

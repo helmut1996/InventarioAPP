@@ -14,6 +14,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -37,6 +38,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,6 +56,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.inventaryapp.R
 import com.example.inventaryapp.components.Alert
 import com.example.inventaryapp.model.Productos
@@ -66,14 +69,32 @@ import java.io.IOException
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddProductoView(
+fun EditProductoView(
     navController: NavController,
     productoVM: viewModelProduct,
-    categoryVM: viewModelCategory
+    categoryVM: viewModelCategory,
+    id:Long
 ) {
+
+
     var nombre by remember { mutableStateOf("") }
     var precios by remember { mutableStateOf("") }
     var stock by remember { mutableStateOf("") }
+    var foto by remember { mutableStateOf("") }
+    var selectedText by remember { mutableStateOf("") }
+    var showImage by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        productoVM.getProductById(id)
+        showImage =true
+    }
+
+    val state = productoVM.state
+    nombre = state.nombre
+    precios = state.precios.toString()
+    stock = state.stock.toString()
+    selectedText = state.categoria
+    foto = state.foto
 
     //pickImage
     var imageUri by remember { mutableStateOf<Uri?>(null) }
@@ -88,7 +109,7 @@ fun AddProductoView(
 
     //spinner
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf("") }
+
     var textfieldSize by remember { mutableStateOf(Size.Zero) }
     val listcategory by categoryVM.cronosllist.collectAsState()
 
@@ -101,7 +122,7 @@ fun AddProductoView(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Nuevo Producto") },
+                title = { Text(text = "Editar Producto") },
                 navigationIcon = {
                     IconButton(onClick = {
                         navController.popBackStack()
@@ -158,7 +179,7 @@ fun AddProductoView(
                             textfieldSize = coordinates.size.toSize()
                         },
                     readOnly = true,
-                    label = {Text("Categorias")},
+                    label = { Text("Categorias") },
                     trailingIcon = {
                         Icon(icon,"contentDescription",
                             Modifier.clickable { expanded = !expanded })
@@ -174,7 +195,7 @@ fun AddProductoView(
                         DropdownMenuItem(onClick = {
                             selectedText = label.nombre
                             expanded = false
-                        }, text = {Text(text = label.nombre)})
+                        }, text = { Text(text = label.nombre) })
                     }
                 }
             }
@@ -187,41 +208,61 @@ fun AddProductoView(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
+                if (showImage){
+                    AsyncImage(
+                        model = foto,
+                        placeholder = painterResource(id = R.drawable.ic_image),
+                        error = painterResource(id = R.drawable.errorphoto),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(200.dp)
+                            .aspectRatio(1280f / 692f)
+                    )
+                }else{
+                    imageUri?.let {
+                        if (Build.VERSION.SDK_INT < 28) {
 
-                imageUri?.let {
-                    if (Build.VERSION.SDK_INT < 28) {
-                        bitmap.value = MediaStore.Images
-                            .Media.getBitmap(context.contentResolver, it)
-                    } else {
-                        val source = ImageDecoder.createSource(context.contentResolver, it)
-                        bitmap.value = ImageDecoder.decodeBitmap(source)
-                    }
+                            bitmap.value = MediaStore.Images
+                                .Media.getBitmap(context.contentResolver, it)
+                        } else {
+                            val source = ImageDecoder.createSource(context.contentResolver, it)
+                            bitmap.value = ImageDecoder.decodeBitmap(source)
+                        }
 
-                    bitmap.value?.let { btm ->
-                        Image(
-                            bitmap = btm.asImageBitmap(),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(200.dp)
-                                .padding(20.dp)
-                        )
+                        bitmap.value?.let { btm ->
+                            Image(
+                                bitmap = btm.asImageBitmap(),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(200.dp)
+                                    .padding(20.dp)
+                            )
+                        }
                     }
                 }
+
+
+
+
+
+
                 IconButton(onClick = {
+                    showImage = false
                     launcher.launch("image/*")
                 }) {
-                    Icon(painter = painterResource(id = R.drawable.ic_image), contentDescription = null)      
+                    Icon(painter = painterResource(id = R.drawable.ic_image), contentDescription = null)
                 }
-                
+
             }
 
             Button(
                 onClick = {
                     // Verificar que la imagen y su URI no sean nulos
                     if (imageUri != null && bitmap.value != null && nombre.isNotEmpty() && precios.isNotEmpty() && selectedText.isNotEmpty() && stock.isNotEmpty()) {
-                        saveImageToFolder(bitmap.value!!,nombre)
-                        productoVM.addProduct(
+                        saveImageToFolder2(bitmap.value!!,nombre)
+                        productoVM.updateProducto(
                             product = Productos(
+                                id = id,
                                 nombre = nombre,
                                 precios = precios.toDouble(),
                                 categoria = selectedText,
@@ -236,8 +277,8 @@ fun AddProductoView(
                 },
                 modifier = Modifier.padding(top = 20.dp)
             ) {
-              
-                Text(text = "Guardar")
+
+                Text(text = "Editar Producto")
             }
 
         }
@@ -253,7 +294,7 @@ fun AddProductoView(
     }
 }
 
-private fun saveImageToFolder(bitmap: Bitmap,nombre:String) {
+private fun saveImageToFolder2(bitmap: Bitmap, nombre:String) {
     val folderName = "ImagenesProducto" // Nombre de la carpeta
     val folder = File(Environment.getExternalStorageDirectory(), folderName)
 
@@ -276,3 +317,20 @@ private fun saveImageToFolder(bitmap: Bitmap,nombre:String) {
         Log.e("SaveImageExample", "Error al guardar la imagen: ${e.message}")
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

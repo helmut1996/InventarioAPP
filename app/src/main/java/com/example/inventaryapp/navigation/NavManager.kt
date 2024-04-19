@@ -22,6 +22,8 @@ import com.example.inventaryapp.ui.categoria.CategoryView
 import com.example.inventaryapp.ui.categoria.EditCategoryView
 import com.example.inventaryapp.ui.home.HomeView
 import com.example.inventaryapp.ui.productos.AddProductoView
+import com.example.inventaryapp.ui.productos.DetailsProducto
+import com.example.inventaryapp.ui.productos.EditProductoView
 import com.example.inventaryapp.ui.productos.ProductView
 import com.example.inventaryapp.ui.users.AddUsersView
 import com.example.inventaryapp.ui.users.EditUsersView
@@ -91,6 +93,20 @@ fun NavManager(
 
             composable(route = ViewsScreens.AddProductoView.name) {
                 AddProductoView(navController, productVM,categoryVM)
+            }
+
+            composable(route = "DetailsProducto/{id}", arguments = listOf(
+                navArgument("id"){type= NavType.LongType}
+            )) {
+                    val id = it.arguments?.getLong("id") ?:0
+                        DetailsProducto(navController,productVM,id)
+            }
+
+            composable(route = "EditProductoView/{id}", arguments = listOf(
+                navArgument("id"){type= NavType.LongType}
+            )) {
+                val id = it.arguments?.getLong("id") ?:0
+                EditProductoView(navController,productVM,categoryVM,id)
             }
 
             composable(route = ViewsScreens.AddUsersView.name) {

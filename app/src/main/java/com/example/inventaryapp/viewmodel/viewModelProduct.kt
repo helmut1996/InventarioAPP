@@ -41,7 +41,7 @@ class viewModelProduct @Inject constructor(private val repository: repositoryPro
     }
 
 
-    fun getUserById(id: Long) {
+    fun getProductById(id: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getProductById(id).collect { item ->
                 state = state.copy(

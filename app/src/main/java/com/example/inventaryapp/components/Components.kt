@@ -139,7 +139,7 @@ fun CardProduct(
     cantidad: String,
     precio: String,
     foto: String,
-    onEdit: () -> Unit,
+    onDetails: () -> Unit,
     onDelete: () -> Unit,
 ) {
     Box(
@@ -151,7 +151,7 @@ fun CardProduct(
                 .padding(10.dp)
                 .height(280.dp)
                 .width(250.dp)
-                .clickable { onEdit() }
+                .clickable { onDetails() }
                 .fillMaxWidth(),
             elevation = CardDefaults.cardElevation(10.dp)
         ) {
