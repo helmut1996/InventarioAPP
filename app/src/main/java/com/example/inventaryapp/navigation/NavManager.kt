@@ -50,21 +50,21 @@ fun NavManager(
                 val currentDestination = navBackStackEntry?.destination
 
                 listOfNavItems.forEach { navItem ->
-                    NavigationBarItem(selected =currentDestination?.hierarchy?.any { it.route == navItem.route } == true,
+                    NavigationBarItem(selected = currentDestination?.hierarchy?.any { it.route == navItem.route } == true,
                         onClick = {
-                                  navController.navigate(navItem.route){
-                                      popUpTo(navController.graph.findStartDestination().id){
-                                          saveState = true
-                                      }
-                                      launchSingleTop = true
-                                      restoreState = true
-                                  }
+                            navController.navigate(navItem.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         },
                         icon = {
-                               Icon(imageVector = navItem.icon, contentDescription =null )
+                            Icon(imageVector = navItem.icon, contentDescription = null)
                         },
                         label = {
-                               Text(text = navItem.label)
+                            Text(text = navItem.label)
                         }
                     )
 
@@ -85,51 +85,51 @@ fun NavManager(
                 UsersView(navController, usersVM)
             }
             composable(route = ViewsScreens.CategoryView.name) {
-                CategoryView(navController,categoryVM)
+                CategoryView(navController, categoryVM)
             }
             composable(route = ViewsScreens.ProductoView.name) {
                 ProductView(navController, productVM)
             }
 
             composable(route = ViewsScreens.AddProductoView.name) {
-                AddProductoView(navController, productVM,categoryVM)
+                AddProductoView(navController, productVM, categoryVM)
             }
 
             composable(route = "DetailsProducto/{id}", arguments = listOf(
-                navArgument("id"){type= NavType.LongType}
+                navArgument("id") { type = NavType.LongType }
             )) {
-                    val id = it.arguments?.getLong("id") ?:0
-                        DetailsProducto(navController,productVM,id)
+                val id = it.arguments?.getLong("id") ?: 0
+                DetailsProducto(navController, productVM, id)
             }
 
             composable(route = "EditProductoView/{id}", arguments = listOf(
-                navArgument("id"){type= NavType.LongType}
+                navArgument("id") { type = NavType.LongType }
             )) {
-                val id = it.arguments?.getLong("id") ?:0
-                EditProductoView(navController,productVM,categoryVM,id)
+                val id = it.arguments?.getLong("id") ?: 0
+                EditProductoView(navController, productVM, categoryVM, id)
             }
 
             composable(route = ViewsScreens.AddUsersView.name) {
                 AddUsersView(navController, usersVM)
             }
             composable(route = ViewsScreens.AddCategoriaView.name) {
-                AddCategoryView(navController,categoryVM)
+                AddCategoryView(navController, categoryVM)
             }
             composable(route = "EditCategoryView/{id}", arguments = listOf(
-                navArgument("id"){type= NavType.LongType}
+                navArgument("id") { type = NavType.LongType }
             )) {
-                val id = it.arguments?.getLong("id") ?:0
-                EditCategoryView(navController,categoryVM, id)
+                val id = it.arguments?.getLong("id") ?: 0
+                EditCategoryView(navController, categoryVM, id)
             }
 
             composable(route = "EditUsersView/{id}", arguments = listOf(
-                navArgument("id"){type= NavType.LongType}
+                navArgument("id") { type = NavType.LongType }
             )) {
-                val id = it.arguments?.getLong("id") ?:0
-                EditUsersView(navController,usersVM, id)
+                val id = it.arguments?.getLong("id") ?: 0
+                EditUsersView(navController, usersVM, id)
             }
 
-            }
+        }
 
     }
 }

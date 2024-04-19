@@ -78,6 +78,7 @@ dependencies {
 
     // Permissions
     implementation ("com.google.accompanist:accompanist-permissions:0.28.0")
+    
 
     // CamaraX
     val camerax_version = "1.4.0-alpha04"
@@ -87,6 +88,8 @@ dependencies {
 
     //Coil
     implementation("io.coil-kt:coil-compose:2.4.0")
+
+    implementation("com.airbnb.android:lottie-compose:4.0.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

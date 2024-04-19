@@ -3,9 +3,29 @@
 package com.example.inventaryapp.ui.home
 
 import android.Manifest
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.example.inventaryapp.R
 import com.example.inventaryapp.components.Alert
 import com.example.inventaryapp.viewmodel.viewModelHome
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -14,6 +34,7 @@ import com.google.accompanist.permissions.rememberMultiplePermissionsState
 
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeView(homeVM: viewModelHome) {
 
@@ -30,7 +51,11 @@ fun HomeView(homeVM: viewModelHome) {
         multiplePermissionsState.launchMultiplePermissionRequest()
         if (multiplePermissionsState.allPermissionsGranted) {
             // If all permissions are granted, then show screen with the feature enabled
+            getTextToShowGivenPermissions(
 
+                multiplePermissionsState.revokedPermissions,
+                multiplePermissionsState.shouldShowRationale
+            )
 
         } else {
             homeVM.showAlert = true
@@ -38,8 +63,38 @@ fun HomeView(homeVM: viewModelHome) {
         }
 
     }
+    val animatione  by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.homepages))
 
-    Text(text = "Home View")
+
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "Inicio") },
+
+            )
+        }
+    ) { pad ->
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(pad),
+                verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Bienbenidos",
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 20.sp
+            )
+            Spacer(modifier = Modifier.height(15.dp))
+            LottieAnimation(
+                modifier = Modifier.size(400.dp),
+                composition = animatione,
+                isPlaying = true
+            )
+        }
+    }
 
 
 
