@@ -64,32 +64,29 @@ dependencies {
     implementation(libs.androidx.material3)
 
     // Room
-    val room_version = "2.6.1"
-    implementation ("androidx.room:room-ktx:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
+    implementation (libs.room.ktx)
+    kapt(libs.androidx.room.compiler)
 
     //  Dagger Hilt
-    implementation ("com.google.dagger:hilt-android:2.46.1")
-    kapt("com.google.dagger:hilt-compiler:2.46.1")
+    implementation (libs.hilt.android)
+    kapt(libs.dagger.hilt.compiler)
 
     //Navigation
-    val nav_version = "2.5.3"
-    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation(libs.androidx.navigation.compose)
 
     // Permissions
-    implementation ("com.google.accompanist:accompanist-permissions:0.28.0")
+    implementation (libs.accompanist.permissions)
     
 
     // CamaraX
-    val camerax_version = "1.4.0-alpha04"
-    implementation ("androidx.camera:camera-camera2:${camerax_version}")
-    implementation ("androidx.camera:camera-lifecycle:${camerax_version}")
-    implementation ("androidx.camera:camera-view:${camerax_version}")
+    implementation (libs.androidx.camera.camera2)
+    implementation (libs.androidx.camera.lifecycle)
+    implementation (libs.androidx.camera.view)
 
     //Coil
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(libs.coil.compose)
 
-    implementation("com.airbnb.android:lottie-compose:4.0.0")
+    implementation(libs.lottie.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
