@@ -95,14 +95,14 @@ fun NavManager(
                 AddProductoView(navController, productVM, categoryVM)
             }
 
-            composable(route = "DetailsProducto/{id}", arguments = listOf(
+            composable(route = "${ViewsScreens.DetailsProducto.name}/{id}", arguments = listOf(
                 navArgument("id") { type = NavType.LongType }
             )) {
                 val id = it.arguments?.getLong("id") ?: 0
                 DetailsProducto(navController, productVM, id)
             }
 
-            composable(route = "EditProductoView/{id}", arguments = listOf(
+            composable(route = "${ViewsScreens.EditProductoView.name}/{id}", arguments = listOf(
                 navArgument("id") { type = NavType.LongType }
             )) {
                 val id = it.arguments?.getLong("id") ?: 0
@@ -115,14 +115,14 @@ fun NavManager(
             composable(route = ViewsScreens.AddCategoriaView.name) {
                 AddCategoryView(navController, categoryVM)
             }
-            composable(route = "EditCategoryView/{id}", arguments = listOf(
+            composable(route = "${ViewsScreens.EditEditCategoryView.name}/{id}", arguments = listOf(
                 navArgument("id") { type = NavType.LongType }
             )) {
                 val id = it.arguments?.getLong("id") ?: 0
                 EditCategoryView(navController, categoryVM, id)
             }
 
-            composable(route = "EditUsersView/{id}", arguments = listOf(
+            composable(route = "${ViewsScreens.EditUsersView.name}/{id}", arguments = listOf(
                 navArgument("id") { type = NavType.LongType }
             )) {
                 val id = it.arguments?.getLong("id") ?: 0

@@ -60,6 +60,7 @@ import coil.compose.AsyncImage
 import com.example.inventaryapp.R
 import com.example.inventaryapp.components.Alert
 import com.example.inventaryapp.model.Productos
+import com.example.inventaryapp.navigation.ViewsScreens
 import com.example.inventaryapp.util.Constants
 import com.example.inventaryapp.viewmodel.viewModelCategory
 import com.example.inventaryapp.viewmodel.viewModelProduct
@@ -270,7 +271,7 @@ fun EditProductoView(
                                 foto = Constants.urlFoto
                             )
                         )
-                        navController.popBackStack()
+                        navController.navigate(ViewsScreens.ProductoView.name)
                     }else {
                         productoVM.showAlert = true
                     }

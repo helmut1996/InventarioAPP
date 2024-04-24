@@ -56,7 +56,7 @@ fun UsersView(navigationController: NavController, usersVM: viewmodelUsers) {
                         email = item.email,
                         icono = Icons.Default.Person,
                         onEdit = {
-                            navigationController.navigate("EditUsersView/${item.id}")
+                            navigationController.navigate("${ViewsScreens.EditUsersView.name}/${item.id}")
                         }) {
                         usersVM.deleteUsers(item)
                     }

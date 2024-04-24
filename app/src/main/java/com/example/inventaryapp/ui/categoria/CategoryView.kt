@@ -54,7 +54,7 @@ fun CategoryView(navigationController: NavController, categoryVM: viewModelCateg
                         desciption = item.descripcion,
                         icono = Icons.Filled.List,
                         onEdit = {
-                            navigationController.navigate("EditCategoryView/${item.id}")
+                            navigationController.navigate("${ViewsScreens.EditEditCategoryView.name}/${item.id}")
                         }) {
                         categoryVM.deleteCategory(item)
                     }
